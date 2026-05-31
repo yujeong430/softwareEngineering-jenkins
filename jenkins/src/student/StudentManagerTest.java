@@ -36,6 +36,32 @@ class StudentManagerTest {
 
     @Test
     @Order(3)
+    @DisplayName("여러 학생 추가 - 김철수, 이영희 추가")
+    void addMultipleStudents_success() {
+        manager.addStudent("김철수");
+        manager.addStudent("이영희");
+        assertTrue(manager.hasStudent("김철수"));
+        assertTrue(manager.hasStudent("이영희"));
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("학생 수 확인 - 홍길동, 김철수, 이영희 총 3명")
+    void getStudentCount_success() {
+        assertEquals(3, manager.getStudentCount());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("학생 목록 확인 - 목록에 3명 모두 포함")
+    void getAllStudents_success() {
+        assertTrue(manager.getAllStudents().contains("홍길동"));
+        assertTrue(manager.getAllStudents().contains("김철수"));
+        assertTrue(manager.getAllStudents().contains("이영희"));
+    }
+
+    @Test
+    @Order(6)
     @DisplayName("학생 제거 - 홍길동 제거 후 조회 시 false 반환")
     void removeStudent_success() {
         manager.removeStudent("홍길동");
@@ -43,8 +69,15 @@ class StudentManagerTest {
     }
 
     @Test
-    @Order(4)
-    @DisplayName("존재하지 않는 학생 제거 예외 처리 - 3번에서 제거된 홍길동 재제거 시 예외 발생")
+    @Order(7)
+    @DisplayName("제거 후 학생 수 확인 - 홍길동 제거 후 2명")
+    void getStudentCount_afterRemove() {
+        assertEquals(2, manager.getStudentCount());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("존재하지 않는 학생 제거 예외 처리 - 제거된 홍길동 재제거 시 예외 발생")
     void removeStudent_notExist_throwsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> manager.removeStudent("홍길동"));
