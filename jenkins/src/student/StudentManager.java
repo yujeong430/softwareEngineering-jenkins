@@ -26,4 +26,14 @@ public class StudentManager {
     public boolean hasStudent(String name) {
         return students.contains(name);
     }
+    
+    //학생 수 확인
+    public int getStudentCount() {
+        return students.size();
+    }
+
+    //학생 목록 확인
+    public Set<String> getAllStudents() {
+        return new HashSet<>(students);
+    }
 }
