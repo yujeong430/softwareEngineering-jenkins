@@ -62,11 +62,17 @@ pipeline {
             junit "${REPORT_DIR}/**/*.xml"
             archiveArtifacts artifacts: "${REPORT_DIR}/**/*", allowEmptyArchive: true
         }
-        failure {
-            echo "Build or test failed"
-        }
         success {
             echo "Build and test succeeded"
+            mail to: 'parkyj0430@gmail.com',
+                 subject: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "빌드가 성공했습니다!\n\n${env.BUILD_URL}"
+        }
+        failure {
+            echo "Build or test failed"
+            mail to: 'parkyj0430@gmail.com',
+                 subject: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "빌드가 실패했습니다.\n\n${env.BUILD_URL}"
         }
     }
 }
